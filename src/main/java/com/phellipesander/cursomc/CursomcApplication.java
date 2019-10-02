@@ -14,6 +14,7 @@ import com.phellipesander.cursomc.entity.Cidade;
 import com.phellipesander.cursomc.entity.Cliente;
 import com.phellipesander.cursomc.entity.Endereco;
 import com.phellipesander.cursomc.entity.Estado;
+import com.phellipesander.cursomc.entity.ItemPedido;
 import com.phellipesander.cursomc.entity.Pagamento;
 import com.phellipesander.cursomc.entity.PagamentoComBoleto;
 import com.phellipesander.cursomc.entity.PagamentoComCartao;
@@ -26,6 +27,7 @@ import com.phellipesander.cursomc.repositories.CidadeRepository;
 import com.phellipesander.cursomc.repositories.ClienteRepository;
 import com.phellipesander.cursomc.repositories.EnderecoRepository;
 import com.phellipesander.cursomc.repositories.EstadoRepository;
+import com.phellipesander.cursomc.repositories.ItemPedidoRepository;
 import com.phellipesander.cursomc.repositories.PagamentoRepository;
 import com.phellipesander.cursomc.repositories.PedidoRepository;
 import com.phellipesander.cursomc.repositories.ProdutoRepository;
@@ -56,6 +58,9 @@ public class CursomcApplication implements CommandLineRunner{
 	
 	@Autowired
 	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -124,6 +129,20 @@ public class CursomcApplication implements CommandLineRunner{
 		 
 		 pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		 pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		 
+		 ItemPedido ip1 = new ItemPedido(ped1, p1, new BigDecimal(00), 1, new BigDecimal(2000));
+		 ItemPedido ip2 = new ItemPedido(ped1, p3, new BigDecimal(00), 2, new BigDecimal(80));
+		 ItemPedido ip3 = new ItemPedido(ped2, p2, new BigDecimal(100), 1, new BigDecimal(800));
+	
+		 ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		 ped2.getItens().addAll(Arrays.asList(ip3));
+		 
+		 p1.getItens().addAll(Arrays.asList(ip1));
+		 p2.getItens().addAll(Arrays.asList(ip3));
+		 p3.getItens().addAll(Arrays.asList(ip2));
+		 
+		 itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+		 
 	}
 
 }
