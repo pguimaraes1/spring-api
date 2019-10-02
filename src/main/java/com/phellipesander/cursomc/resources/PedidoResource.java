@@ -9,26 +9,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.phellipesander.cursomc.entity.Cliente;
-import com.phellipesander.cursomc.services.ClienteService;
+import com.phellipesander.cursomc.entity.Pedido;
+import com.phellipesander.cursomc.services.PedidoService;
 
 @RestController
-@RequestMapping(value="/clientes")
-public class ClienteResource {
+@RequestMapping(value="/pedidos")
+public class PedidoResource {
 	
 	@Autowired
-	private ClienteService service;
-	
+	private PedidoService service;
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Long id) {
-		Cliente obj = service.buscar(id);
+		Pedido obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
-	public List<Cliente> findAll(){
-		List<Cliente> clientes = service.listar();
+	public List<Pedido> findAll(){
+		List<Pedido> clientes = service.listar();
 		return clientes;
 	}
 	
