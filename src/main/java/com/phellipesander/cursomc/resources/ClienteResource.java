@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.phellipesander.cursomc.dto.CategoriaDTO;
 import com.phellipesander.cursomc.dto.ClienteDTO;
 import com.phellipesander.cursomc.dto.ClienteNewDTO;
-import com.phellipesander.cursomc.entity.Categoria;
 import com.phellipesander.cursomc.entity.Cliente;
 import com.phellipesander.cursomc.services.ClienteService;
 
