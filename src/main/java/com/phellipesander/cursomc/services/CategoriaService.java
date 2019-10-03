@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.phellipesander.cursomc.dto.CategoriaDTO;
 import com.phellipesander.cursomc.entity.Categoria;
+import com.phellipesander.cursomc.entity.Cliente;
 import com.phellipesander.cursomc.repositories.CategoriaRepository;
 import com.phellipesander.cursomc.services.exception.DataIntegrityException;
 import com.phellipesander.cursomc.services.exception.ObjectNotFoundException;
@@ -37,8 +38,9 @@ public class CategoriaService {
 	}
 	
 	public Categoria update(Categoria obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		Categoria newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
 	}
 	
 	public void delete(Long id) {
@@ -59,6 +61,10 @@ public class CategoriaService {
 	
 	public Categoria fromDTO(CategoriaDTO objDto) {
 		return new Categoria(objDto.getId(), objDto.getNome());
+	}
+	
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
 	}
 	
 }
