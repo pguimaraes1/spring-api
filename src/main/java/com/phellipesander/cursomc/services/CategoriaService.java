@@ -9,10 +9,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.phellipesander.cursomc.dto.CategoriaDTO;
 import com.phellipesander.cursomc.entity.Categoria;
-import com.phellipesander.cursomc.entity.Cliente;
 import com.phellipesander.cursomc.repositories.CategoriaRepository;
 import com.phellipesander.cursomc.services.exception.DataIntegrityException;
 import com.phellipesander.cursomc.services.exception.ObjectNotFoundException;
@@ -32,6 +32,7 @@ public class CategoriaService {
 		return repo.findAll();
 	}
 	
+	@Transactional
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
 		return repo.save(obj);
