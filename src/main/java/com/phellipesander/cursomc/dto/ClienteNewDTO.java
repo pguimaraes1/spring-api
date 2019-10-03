@@ -2,22 +2,38 @@ package com.phellipesander.cursomc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import com.phellipesander.cursomc.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// cliente
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String nome;
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Email(message = "email inválido")
 	private String email;
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cpfOuCnpj;
 	private Integer tipoCliente;
 	// endereco
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String logradouro;
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String numero;
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String complemento;
 	private String bairro;
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cep;
 	// telefone
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String telefone1;
+	
 	private String telefone2;
 	private String telefone3;
 
