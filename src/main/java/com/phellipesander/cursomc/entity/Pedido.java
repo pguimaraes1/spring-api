@@ -1,8 +1,11 @@
 package com.phellipesander.cursomc.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -50,6 +53,17 @@ public class Pedido implements Serializable {
 		this.instante = instante;
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
+	}
+	
+	public BigDecimal getValorTotal() {
+		
+		List<BigDecimal> values = new ArrayList<>();
+		for(ItemPedido ip : itens) {
+			values.add(ip.getSubTotal());
+		}
+		
+		return values.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+		
 	}
 
 	public Long getId() {
