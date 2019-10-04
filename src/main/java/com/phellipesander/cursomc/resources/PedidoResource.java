@@ -27,7 +27,7 @@ public class PedidoResource {
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public List<Pedido> findAll(){
-		List<Pedido> clientes = service.listar();
+		List<Pedido> clientes = service.findAll();
 		return clientes;
 	}
 	

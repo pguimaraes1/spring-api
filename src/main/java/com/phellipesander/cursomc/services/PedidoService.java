@@ -17,11 +17,12 @@ public class PedidoService {
 	private PedidoRepository repo;
 	
 	public Pedido find(Long id) {
+		
 		Optional<Pedido> obj = repo.findById(id);
  		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 	
-	public List<Pedido> listar(){
+	public List<Pedido> findAll(){
 		return repo.findAll();
 	}
 	
