@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.phellipesander.cursomc.dto.CategoriaDTO;
-import com.phellipesander.cursomc.entity.Categoria;
 import com.phellipesander.cursomc.entity.Pedido;
 import com.phellipesander.cursomc.services.PedidoService;
 
