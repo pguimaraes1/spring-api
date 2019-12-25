@@ -18,9 +18,12 @@ import com.phellipesander.cursomc.dto.ClienteNewDTO;
 import com.phellipesander.cursomc.entity.Cidade;
 import com.phellipesander.cursomc.entity.Cliente;
 import com.phellipesander.cursomc.entity.Endereco;
+import com.phellipesander.cursomc.entity.enums.Perfil;
 import com.phellipesander.cursomc.entity.enums.TipoCliente;
 import com.phellipesander.cursomc.repositories.ClienteRepository;
 import com.phellipesander.cursomc.repositories.EnderecoRepository;
+import com.phellipesander.cursomc.security.UserSS;
+import com.phellipesander.cursomc.services.exception.AuthorizationException;
 import com.phellipesander.cursomc.services.exception.DataIntegrityException;
 import com.phellipesander.cursomc.services.exception.ObjectNotFoundException;
 
@@ -37,6 +40,12 @@ public class ClienteService {
 	private EnderecoRepository endRepo;
 
 	public Cliente find(Long id) {
+		
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado!");
+		}
+		
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));

@@ -31,8 +31,8 @@ public class ProdutoResource {
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public List<Produto> findAll(){
-		List<Produto> clientes = service.findAll();
-		return clientes;
+		List<Produto> produtos = service.findAll();
+		return produtos;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
