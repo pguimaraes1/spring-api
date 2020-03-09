@@ -34,7 +34,7 @@ public class ClienteService {
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
-	private ClienteRepository repo;
+	private ClienteRepository clienteRepository;
 	
 	@Autowired
 	private EnderecoRepository endRepo;
@@ -46,14 +46,14 @@ public class ClienteService {
 			throw new AuthorizationException("Acesso negado!");
 		}
 		
-		Optional<Cliente> obj = repo.findById(id);
+		Optional<Cliente> obj = clienteRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
 	@GetMapping
 	public List<Cliente> findAll() {
-		List<Cliente> lista = repo.findAll();
+		List<Cliente> lista = clienteRepository.findAll();
 		return lista;
 	}
 	
@@ -61,20 +61,20 @@ public class ClienteService {
 	public Cliente insert(Cliente obj) {
 		obj.setId(null);
 		endRepo.saveAll(obj.getEnderecos());
-		obj = repo.save(obj);
+		obj = clienteRepository.save(obj);
 		return obj;
 	}
 
 	public Cliente update(Cliente obj) {
 		Cliente newObj = find(obj.getId());
 		updateData(newObj, obj);
-		return repo.save(newObj);
+		return clienteRepository.save(newObj);
 	}
 
 	public void delete(Long id) {
 		find(id);
 		try {
-			repo.deleteById(id);
+			clienteRepository.deleteById(id);
 
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel excluir um cliente que possui pedidos!");
@@ -83,7 +83,7 @@ public class ClienteService {
 
 	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orederBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orederBy);
-		return repo.findAll(pageRequest);
+		return clienteRepository.findAll(pageRequest);
 	}
 
 	public Cliente fromDTO(ClienteDTO objDto) {
