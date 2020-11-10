@@ -1,5 +1,6 @@
 package com.phellipesander.cursomc.security;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.naming.AuthenticationException;
@@ -17,9 +18,9 @@ import com.phellipesander.cursomc.dto.CredenciaisDTO;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-	private AuthenticationManager authenticationManager;
+	private final AuthenticationManager authenticationManager;
 
-	private JWTUtil jwtUtil;
+	private final JWTUtil jwtUtil;
 
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
 		this.authenticationManager = authenticationManager;
@@ -31,10 +32,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		try {
 			CredenciaisDTO creds = new ObjectMapper().readValue(request.getInputStream(), CredenciaisDTO.class);
 			UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getSenha(), new ArrayList<>());
-			
-			Authentication auth = authenticationManager.authenticate(authToken);
-			return auth;
-		} catch (Exception e) {
+
+			return authenticationManager.authenticate(authToken);
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}

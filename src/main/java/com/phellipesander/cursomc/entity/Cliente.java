@@ -24,153 +24,163 @@ import com.phellipesander.cursomc.entity.enums.TipoCliente;
 
 @Entity
 public class Cliente implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String nome;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nome;
 
-	@Column(unique = true)
-	private String email;
-	private String cpfOuCnpj;
-	private Integer tipoCliente;
-	
-	@JsonIgnore
-	private String senha;
+    @Column(unique = true)
+    private String email;
+    private String cpfOuCnpj;
+    private Integer tipoCliente;
 
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-	private List<Endereco> enderecos = new ArrayList<>();
+    @JsonIgnore
+    private String senha;
 
-	@ElementCollection
-	@CollectionTable(name = "telefone")
-	private Set<String> telefones = new HashSet<>();
-	
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "PERFIS")
-	private Set<Integer> perfis = new HashSet<>();
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<Endereco> enderecos = new ArrayList<>();
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "cliente")
-	private List<Pedido> pedidos = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "telefone")
+    private Set<String> telefones = new HashSet<>();
 
-	public Cliente() {
-		addPerfil(Perfil.CLIENTE);
-	}
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "PERFIS")
+    private Set<Integer> perfis = new HashSet<>();
 
-	public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente, String senha) {
-		this.id = id;
-		this.nome = nome;
-		this.email = email;
-		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCod();
-		this.senha = senha;
-		addPerfil(Perfil.CLIENTE);
-	}
+    @JsonIgnore
+    @OneToMany(mappedBy = "cliente")
+    private List<Pedido> pedidos = new ArrayList<>();
 
-	public Long getId() {
-		return id;
-	}
+    private String imgUrl;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Cliente() {
+        addPerfil(Perfil.CLIENTE);
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipoCliente, String senha) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.cpfOuCnpj = cpfOuCnpj;
+        this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCod();
+        this.senha = senha;
+        addPerfil(Perfil.CLIENTE);
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public String getCpfOuCnpj() {
-		return cpfOuCnpj;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public void setCpfOuCnpj(String cpfOuCnpj) {
-		this.cpfOuCnpj = cpfOuCnpj;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public TipoCliente getTipoCliente() {
-		return TipoCliente.toEmum(tipoCliente);
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setTipoCliente(TipoCliente tipoCliente) {
-		this.tipoCliente = tipoCliente.getCod();
-	}
+    public String getCpfOuCnpj() {
+        return cpfOuCnpj;
+    }
 
-	public String getSenha() {
-		return senha;
-	}
+    public void setCpfOuCnpj(String cpfOuCnpj) {
+        this.cpfOuCnpj = cpfOuCnpj;
+    }
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+    public TipoCliente getTipoCliente() {
+        return TipoCliente.toEmum(tipoCliente);
+    }
 
-	public List<Endereco> getEnderecos() {
-		return enderecos;
-	}
+    public void setTipoCliente(TipoCliente tipoCliente) {
+        this.tipoCliente = tipoCliente.getCod();
+    }
 
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
-	}
+    public String getSenha() {
+        return senha;
+    }
 
-	public Set<String> getTelefones() {
-		return telefones;
-	}
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 
-	public void setTelefones(Set<String> telefones) {
-		this.telefones = telefones;
-	}
-	
-	public Set<Perfil> getPerfis() {
-		return perfis.stream().map(x -> Perfil.toEmum(x)).collect(Collectors.toSet());
-	}
-	
-	public void addPerfil(Perfil perfil) {
-		perfis.add(perfil.getCod());
-	}
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
 
-	public List<Pedido> getPedidos() {
-		return pedidos;
-	}
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
 
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
+    public Set<String> getTelefones() {
+        return telefones;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
+    public void setTelefones(Set<String> telefones) {
+        this.telefones = telefones;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Cliente other = (Cliente) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
+    public Set<Perfil> getPerfis() {
+        return perfis.stream().map(x -> Perfil.toEmum(x)).collect(Collectors.toSet());
+    }
+
+    public void addPerfil(Perfil perfil) {
+        perfis.add(perfil.getCod());
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Cliente other = (Cliente) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
 
 }

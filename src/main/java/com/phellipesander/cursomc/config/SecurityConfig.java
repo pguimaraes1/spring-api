@@ -29,6 +29,7 @@ import com.phellipesander.cursomc.security.JWTUtil;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Qualifier("userDetailsServiceImpl")
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
@@ -49,11 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private static final String[] PUBLIC_MATCHERS_POST = {
 			"/clientes",
-			"/clientes/picture",
 			"/auth/forgot/**"
 	};
-	
-	@Override
+
 	protected void configure(HttpSecurity http) throws Exception{
 		
 		if(Arrays.asList(env.getActiveProfiles()).contains("test")) {
@@ -71,7 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
-	
+
+	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
 		
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
