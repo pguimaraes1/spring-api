@@ -1,5 +1,6 @@
 package com.phellipesander.cursomc.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,7 @@ import com.phellipesander.cursomc.security.UserSS;
 import com.phellipesander.cursomc.services.exception.AuthorizationException;
 import com.phellipesander.cursomc.services.exception.DataIntegrityException;
 import com.phellipesander.cursomc.services.exception.ObjectNotFoundException;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ClienteService {
@@ -38,6 +40,9 @@ public class ClienteService {
 	
 	@Autowired
 	private EnderecoRepository endRepo;
+
+	@Autowired
+	private S3Service s3Service;
 
 	public Cliente find(Long id) {
 		
@@ -110,5 +115,9 @@ public class ClienteService {
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
 	}
-	
+
+	public URI uploadProfilePicture(MultipartFile multipartFile){
+		return s3Service.uploadFile(multipartFile);
+	}
+
 } 
