@@ -6,11 +6,11 @@
   <form>
     <ion-item>
       <ion-label stacked>Email</ion-label>
-      <ion-input type="text" placeholder="Email"></ion-input>
+      <ion-input [(ngModel)]= "creds.email" type="text" placeholder="Email" name="email"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Senha</ion-label>
-      <ion-input type="password" placeholder="Senha"></ion-input>
+      <ion-input [(ngModel)]= "creds.senha" type="password" placeholder="Senha" name="senha"></ion-input>
     </ion-item>
     <button ion-button block (click)="login()" class="login-button">Entrar</button>
   </form>
